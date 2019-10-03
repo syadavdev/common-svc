@@ -17,7 +17,7 @@ public class OAuthResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     protected Environment env;
 
-    @Autowired
+    @Override
     public void configure(final HttpSecurity http) throws Exception{
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and().authorizeRequests().anyRequest().permitAll();
         http.headers().frameOptions().sameOrigin();
