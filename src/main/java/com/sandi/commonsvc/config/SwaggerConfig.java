@@ -1,27 +1,43 @@
 package com.sandi.commonsvc.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class SwaggerConfig implements WebMvcConfigurer{
+
+    @Value("${swagger.access.token:}")
+    private String accessToken;
 
     @Bean
     public Docket api() {
+        ParameterBuilder parameterBuilder = new ParameterBuilder();
+        parameterBuilder.name("Authorization").modelRef(new ModelRef("string")).parameterType("header").required(true)
+                .defaultValue("Bearer "+ accessToken).build();
+        List<Parameter> parameters = new ArrayList<>(1);
+        parameters.add(parameterBuilder.build());
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(getApiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage(getControllerPackage()))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .globalOperationParameters(parameters);
     }
 
     private ApiInfo getApiInfo() {
