@@ -1,4 +1,4 @@
-package com.sandi.commonsvc.rabbitmq;
+package com.sandi.commonsvc.activemq;
 
 import org.springframework.http.HttpStatus;
 

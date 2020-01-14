@@ -1,17 +1,17 @@
-package com.sandi.commonsvc.rabbitmq;
+package com.sandi.commonsvc.activemq;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MessageSender {
 
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    private JmsTemplate jmsTemplate;
 
     public void sendMessage(String queue, String message){
-        rabbitTemplate.convertAndSend(queue, message);
+        jmsTemplate.convertAndSend(queue, message);
     }
 
 }
