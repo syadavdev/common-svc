@@ -24,7 +24,7 @@
 		<java.version>1.8</java.version>
 		<integration-tests.skip>false</integration-tests.skip>
 		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
-		<swagger.version>2.7.0</swagger.version>
+		<swagger.version>2.10.0</swagger.version>
 		<jjwt.version>0.9.1</jjwt.version>
 	</properties>
 
